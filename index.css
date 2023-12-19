@@ -15,7 +15,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 html,
 body {
@@ -71,9 +71,9 @@ body {
   padding: 10px 15px;
   border-radius: 50%;
 }
-.main-wrapper .aside-wrapper .active > span:nth-child(1){
-    background-color: var(--Magnolia);
-    color: black;
+.main-wrapper .aside-wrapper .active > span:nth-child(1) {
+  background-color: var(--Magnolia);
+  color: black;
 }
 .main-wrapper .aside-wrapper li span:nth-child(2) span:nth-child(1) {
   color: var(--Light-gray);
@@ -81,66 +81,327 @@ body {
 .main-wrapper .aside-wrapper li span:nth-child(2) span:nth-child(2) {
   font-weight: bold;
 }
+.confirm-btn{
+    background-color: var(--Purplish-blue) !important;
+}
 /* 
 ============================================
 Page one Styling
 ============================================
 */
-.steps-wrapper{
-    padding: 1rem;
+.steps-wrapper {
+  padding: 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+}
+.steps-wrapper .step-one,
+.steps-wrapper .step-two,
+.steps-wrapper .step-three,
+.steps-wrapper .step-four {
+  height: 100%;
+  width: 520px;
+  display: none;
+}
+.steps-wrapper .activePage{
     display: flex;
-    flex-direction: column;
 }
-.steps-wrapper .step-one{
-    height: 100%;
+.steps-wrapper .step-one > .container,
+.steps-wrapper .step-two > .container,
+.steps-wrapper .step-three > .container,
+.steps-wrapper .step-four > .container{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: var(--Marine-blue);
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
 }
-.steps-wrapper .step-one > .container{
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    color: var(--Marine-blue);
-    height: 100%;
-    justify-content: space-between;
+.steps-wrapper .container h2 {
+  font-size: 2rem;
 }
-.steps-wrapper .container h2{
-    font-size: 2rem
+.steps-wrapper .step-one p,
+.steps-wrapper .step-two_header p,
+.steps-wrapper .step-three p,
+.steps-wrapper .step-four p {
+  margin: 15px 0;
+  font-size: 1.1rem;
+  color: var(--Cool-gray);
+  letter-spacing: 0.5px;
 }
-.steps-wrapper .step-one p {
-    margin: 15px 0;
-    font-size: 1.1rem;
-    color: var(--Cool-gray);
-    letter-spacing: .5px;
-}
-.steps-wrapper .step-one form div{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.steps-wrapper .step-one form div {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 .steps-wrapper .step-one form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+}
+.steps-wrapper .step-one form label {
+  display: flex;
+  justify-content: space-between;
+}
+.steps-wrapper .step-one form label .lbl-error {
+  color: var(--Strawberry-red);
+  display: none;
+}
+.steps-wrapper .step-one form .input-error {
+  border: 1px solid var(--Strawberry-red);
+}
+.steps-wrapper .step-one form input {
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--Light-gray);
+  outline: none;
+  cursor: pointer;
+}
+.steps-wrapper .step-one form input:focus {
+  border: 1px solid var(--Purplish-blue);
+}
+.steps-wrapper .step-one form input:hover {
+  border: 1px solid var(--Purplish-blue);
+}
+.nav-btn {
+  display: flex;
+  justify-content: space-between;
+}
+.nav-btn #next-btn {
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: var(--Marine-blue);
+  color: white;
+  border: none;
+  font-weight: bold;
+}
+.nav-btn #next-btn:hover {
+  background-color: hsl(213, 59%, 28%);
+}
+.nav-btn #prev-btn {
+  background: none;
+  border: none;
+  color: var(--Cool-gray);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.nav-btn #prev-btn:hover {
+  color: var(--Marine-blue);
+}
+/* 
+============================================
+Page two Styling
+============================================
+*/
+.steps-wrapper .step-two > .container {
+  justify-content: start;
+}
+.step-two .plans {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 1rem 0;
+}
+.step-two .plans .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 180px;
+  width: 170px;
+  border-radius: 8px;
+  border: 1px solid var(--Light-gray);
+  padding: 15px;
+  cursor: pointer;
+  background: transparent;
+  outline: none;
+}
+.step-two .plans .card:hover,
+.step-two .plans .card:focus {
+  border: 1px solid var(--Purplish-blue);
+  background-color: var(--Magnolia);
+}
+.step-two .plans .card p {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+}
+.step-two .plans .card p span:nth-child(1) {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.step-two .plans .card p span:nth-child(2) {
+  font-size: 0.9rem;
+  color: var(--Cool-gray);
+}
+.step-two .switch-container {
+  background-color: var(--Magnolia);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 1rem;
+  border-radius: 8px;
+  justify-content: center;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--Marine-blue);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.switch-container input:checked + .slider {
+  background-color: var(--Marine-blue);
+}
+
+.switch-container input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+.switch-container input:checked + .slider:before {
+  -webkit-transform: translateX(19px);
+  -ms-transform: translateX(19px);
+  transform: translateX(19px);
+}
+.switch-container span {
+  color: var(--Cool-gray);
+  font-weight: bold;
+}
+
+.switch-container #active {
+  color: var(--Marine-blue);
+}
+/* 
+============================================
+Page three Styling
+============================================
+*/
+.steps-wrapper .step-three > .container {
+  justify-content: start;
+}
+.steps-wrapper .step-three .add-ons_wrapper {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.steps-wrapper .step-three .add-ons_wrapper li {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem;
+  border: 1px solid var(--Light-gray);
+  border-radius: 10px;
+}
+.steps-wrapper .step-three .add-ons_wrapper li label{
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 5px;
     flex: 1;
 }
-.steps-wrapper .step-one form input{
-    padding: 15px;
+.steps-wrapper .step-three .add-ons_wrapper li label span:nth-child(1){
+    font-weight: bold;
+    color: var(--Marine-blue);
+    font-size: 1.1rem;
+}
+.steps-wrapper .step-three .add-ons_wrapper li label span:nth-child(2){
+    color: var(--Cool-gray);
+    font-size: .9rem;
+}
+.steps-wrapper .step-three .add-ons_wrapper li  p{
+    color: var(--Purplish-blue) ;
+}
+.steps-wrapper .step-three .add-ons_wrapper li:has(input:checked){
+    border: 1px solid var(--Purplish-blue);
+    background-color: var(--Magnolia);
+}
+/* 
+============================================
+Page four Styling
+============================================
+*/
+.steps-wrapper .step-four > .container {
+  justify-content: start;
+}
+.finishup-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+.finishup-wrapper ul{
+    background-color: var(--Magnolia);
+    list-style: none;
+    padding: 1rem;
     border-radius: 8px;
-    border: 1px solid var(--Light-gray);
-    outline: none;
 }
-.steps-wrapper .step-one form input:focus{
-        border: 1px solid var(--Purplish-blue);
-
-}
-.nav-btn{
+.finishup-wrapper ul li{
     display: flex;
     justify-content: space-between;
 }
-.nav-btn #next-btn{
-    padding: 1rem 1.5rem;
-    border-radius: 5px;
-    background-color: var(--Marine-blue);
-    color: white;
-    border: none;
+.finishup-wrapper ul li:nth-child(1){
+    border-bottom: 1px solid var(--Light-gray);
+}
+.finishup-wrapper ul li:nth-child(1) p{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.finishup-wrapper ul li:nth-child(1) p span:nth-child(1){
+    color: var(--Marine-blue);
+    font-weight: bold;
+}
+.finishup-wrapper ul li:nth-child(1) p a{
+    color: var(--Cool-gray);
+}
+.finishup-wrapper ul li p:nth-child(2){
+    color: var(--Marine-blue);
+}
+.finishup-wrapper ul li:nth-child(1) p:nth-child(2){
+    font-weight: bold;
+}
+.finishup-wrapper .bottom{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+.finishup-wrapper .bottom p:nth-child(2){
+    color: var(--Purplish-blue);
     font-weight: bold;
 }
