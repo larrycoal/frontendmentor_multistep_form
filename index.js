@@ -5,71 +5,165 @@ const pageThree = $("#step-three");
 const pageFour = $("#step-four");
 const nextBtn = $("#next-btn");
 const prevBtn = $("#prev-btn");
-//const allPages = [pageOne, pageTwo, pageThree, pageFour];
-let nextPage = pageTwo;
-let prevPage = null;
-let pageNum = 1;
+const nameNpt = $("#name");
+const emailNpt = $("#email");
+const telNpt = $("#tel");
+const nameErr = $(".name-err");
+const emailErr = $(".email-err");
+const telErr = $(".tel-err");
 const app = () => {
-  class Pagination {
+  let formValues = {
+    personalNfo: {
+      name: null,
+      email: "",
+      phoneNum: null,
+    },
+  };
+
+  const handleInputChange = (evt) => {
+    let newPersonalNfo = {
+      ...formValues.personalNfo,
+      [evt.target.name]: evt.target.value,
+    };
+
+    formValues = {
+      ...formValues,
+      personalNfo: newPersonalNfo,
+    };
+  };
+  nameNpt.addEventListener("change", (e) => {
+    handleInputChange(e);
+  });
+  emailNpt.addEventListener("change", (e) => {
+    handleInputChange(e);
+  });
+  telNpt.addEventListener("change", (e) => {
+    handleInputChange(e);
+  });
+  class FormHandler {
     constructor(pageOne, pageTwo, pageThree, pageFour) {
-      this.allPages = [pageOne, pageTwo, pageThree, pageFour];
-      this.currentPage = pageOne;
+      this.allPages = [
+        {
+          id: 1,
+          name: "form-page",
+          element: pageOne,
+          validation: () => this.handleValidation("personalNfo"),
+        },
+        {
+          id: 2,
+          name: "plan-page",
+          element: pageTwo,
+          validation: () => this.handleValidation("personalNfo"),
+        },
+        {
+          id: 3,
+          name: "addons-page",
+          element: pageThree,
+          validation: () => this.handleValidation("personalNfo"),
+        },
+        {
+          id: 4,
+          name: "finish-page",
+          element: pageFour,
+          validation: () => true,
+        },
+      ];
+      this.currentPage = this.allPages[0];
       this.prevPage = null;
       this.pageLength = this.allPages.length;
-      this.currentIdx = this.allPages.indexOf(this.currentPage);
       prevBtn.style.opacity = 0;
       prevBtn.disabled = true;
     }
+    handleSubmission() {
+      console.log("submit");
+    }
+    handleValidation(type) {
+      let validRegex =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      let valid = true;
+      emailErr.style.display = "none";
+      nameErr.style.display = "none";
+      telErr.style.display = "none";
 
-    gotoNext() {
-      if (this.currentIdx + 1 >= this.pageLength) {
-        nextBtn.textContent = "Confirm";
-        nextBtn.classList.add("confirm-btn");
-      } else {
-        this.allPages.forEach((page, idx) => {
-          if (page.classList.contains("activePage")) {
-            this.prevPage = page;
-            this.currentPage = this.allPages[idx + 1];
-            this.currentIdx = this.allPages.indexOf(this.currentPage);
-            prevBtn.style.opacity = 1;
-            prevBtn.disabled = false;
+      switch (type) {
+        case "personalNfo":
+          if (
+            formValues.personalNfo.name === null ||
+            formValues.personalNfo.name.trim().length === 0
+          ) {
+            valid = false;
+            nameErr.style.display = "inline";
+            return;
           }
-        });
+          if (
+            formValues.personalNfo.email.match(validRegex) === null ||
+            !formValues.personalNfo.email.match(validRegex)
+          ) {
+            valid = false;
+            emailErr.style.display = "inline";
+            emailErr.textContent = "enter a valid email address";
+            return;
+          }
+          if (
+            formValues.personalNfo.phoneNum === null ||
+            formValues.personalNfo.phoneNum.trim().length === 0
+          ) {
+            valid = false;
+            telErr.style.display = "inline";
+            return;
+          }
+          break;
+
+        default:
+          break;
       }
-      if (this.currentIdx + 1 >= this.pageLength) {
+      return valid;
+    }
+    gotoNext() {
+      let validated = this.currentPage.validation();
+      console.log(validated)
+      if (!validated) return;
+      this.prevPage = this.currentPage;
+      this.currentPage = this.allPages.filter(
+        (page) => page.id === this.currentPage.id + 1
+      )[0];
+      prevBtn.style.opacity = 1;
+      prevBtn.disabled = false;
+      this.prevPage.element.classList.remove("activePage");
+      this.currentPage.element.classList.add("activePage");
+
+      if (this.currentPage.id === 4) {
         nextBtn.textContent = "Confirm";
         nextBtn.classList.add("confirm-btn");
       }
-      this.prevPage.classList.remove("activePage");
-      this.currentPage.classList.add("activePage");
     }
     gotoPrev() {
-      nextBtn.disabled = false;
-       nextBtn.textContent = "Next step";
-       nextBtn.classList.remove("confirm-btn");
-      if (this.currentIdx - 1 <= 0) {
+      this.prevPage = this.currentPage;
+      this.currentPage = this.allPages.filter(
+        (page) => page.id === this.currentPage.id - 1
+      )[0];
+      this.prevPage.element.classList.remove("activePage");
+      this.currentPage.element.classList.add("activePage");
+      nextBtn.textContent = "Next step";
+      nextBtn.classList.remove("confirm-btn");
+      if (this.currentPage.id === 1) {
         prevBtn.style.opacity = 0;
         prevBtn.disabled = true;
       }
-      this.allPages.forEach((page, idx) => {
-        if (page.classList.contains("activePage")) {
-          this.prevPage = page;
-          this.currentPage = this.allPages[idx - 1];
-          this.currentIdx = this.allPages.indexOf(this.currentPage);
-        }
-      });
-      this.prevPage.classList.remove("activePage");
-      this.currentPage.classList.add("activePage");
     }
   }
 
-  let pagination = new Pagination(pageOne, pageTwo, pageThree, pageFour);
+  let formhandler = new FormHandler(pageOne, pageTwo, pageThree, pageFour);
 
   nextBtn.addEventListener("click", () => {
-    pagination.gotoNext();
+    if (nextBtn.textContent !== "Confirm") {
+      formhandler.gotoNext();
+    } else {
+      formhandler.handleSubmission();
+    }
   });
   prevBtn.addEventListener("click", () => {
-    pagination.gotoPrev();
+    formhandler.gotoPrev();
   });
 };
 

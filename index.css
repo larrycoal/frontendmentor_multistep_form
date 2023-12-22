@@ -84,6 +84,9 @@ body {
 .confirm-btn{
     background-color: var(--Purplish-blue) !important;
 }
+.name-err,.email-err,.tel-err{
+    display: none;
+}
 /* 
 ============================================
 Page one Styling
@@ -146,7 +149,6 @@ Page one Styling
 }
 .steps-wrapper .step-one form label .lbl-error {
   color: var(--Strawberry-red);
-  display: none;
 }
 .steps-wrapper .step-one form .input-error {
   border: 1px solid var(--Strawberry-red);

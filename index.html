@@ -71,7 +71,7 @@
           </div>
         </aside>
         <section class="steps-wrapper">
-          <div class="step-one activePage" id="step-one"  >
+          <div class="step-one activePage" id="step-one">
             <div class="container">
               <div class="page-one_header">
                 <h2>Personal info</h2>
@@ -81,31 +81,44 @@
                 <div>
                   <label for="name"
                     ><span>Name</span>
-                    <span class="lbl-error">This field is required</span></label
+                    <span class="lbl-error name-err"
+                      >This field is required</span
+                    ></label
                   >
                   <input
                     type="text"
                     id="name"
+                    name="name"
                     placeholder="e.g. Stephen King"
                   />
                 </div>
                 <div>
                   <label for="email"
                     ><span>Email</span>
-                    <span class="lbl-error">This field is required</span></label
+                    <span class="lbl-error email-err"
+                      >This field is required</span
+                    ></label
                   >
                   <input
                     type="email"
                     id="email"
+                    name="email"
                     placeholder="e.g. stephenking@lorem.com"
                   />
                 </div>
                 <div>
                   <label for="tel">
                     <span>Phone Number</span>
-                    <span class="lbl-error">This field is required</span>
+                    <span class="lbl-error tel-err"
+                      >This field is required</span
+                    >
                   </label>
-                  <input type="tel" id="tel" placeholder="e.g +1 234-567-987" />
+                  <input
+                    type="tel"
+                    id="tel"
+                    name="phoneNum"
+                    placeholder="e.g +1 234-567-987"
+                  />
                 </div>
               </form>
             </div>
@@ -259,7 +272,7 @@
           </div>
           <div class="nav-btn">
             <button id="prev-btn">Go Back</button>
-            <button  id="next-btn">Next Step</button>
+            <button id="next-btn">Next Step</button>
           </div>
         </section>
       </div>
