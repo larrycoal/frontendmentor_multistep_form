@@ -3,6 +3,10 @@ const pageOne = $("#step-one");
 const pageTwo = $("#step-two");
 const pageThree = $("#step-three");
 const pageFour = $("#step-four");
+const pagenumOne = $("#pagenum-one");
+const pagenumTwo = $("#pagenum-two");
+const pagenumThree = $("#pagenum-three");
+const pagenumFour = $("#pagenum-four");
 const nextBtn = $("#next-btn");
 const prevBtn = $("#prev-btn");
 const nameNpt = $("#name");
@@ -11,6 +15,25 @@ const telNpt = $("#tel");
 const nameErr = $(".name-err");
 const emailErr = $(".email-err");
 const telErr = $(".tel-err");
+const checkbox = $("#checkbox");
+const montlyPlan = $(".monthly-plan");
+const yearlyPlan = $(".yearly-plan");
+const arcadePrice = $(".arcadePrice");
+const advancedPrice = $(".advancedPrice");
+const proPrice = $(".proPrice");
+const planErr = $(".plan-err");
+const onlineAddon = $("#online-addons");
+const storageAddon = $("#storage-addons");
+const profileAddon = $("#profile-addons");
+const onlineCheck = $("#online-check");
+const storageCheck = $("#storage-check");
+const profileCheck = $("#profile-check");
+const finishup = $("#finishup");
+const totalAmt = $("#total-amt");
+const completionPage = $(".completion-page");
+const stepsWrapper = $(".steps-wrapper");
+const yearlyPromo = document.querySelectorAll(".yearlyPromo");
+const plans = document.querySelectorAll(".card");
 const app = () => {
   let formValues = {
     personalNfo: {
@@ -18,6 +41,11 @@ const app = () => {
       email: "",
       phoneNum: null,
     },
+    plan: {
+      sub: "monthly",
+      type: null,
+    },
+    addon: [],
   };
 
   const handleInputChange = (evt) => {
@@ -40,6 +68,106 @@ const app = () => {
   telNpt.addEventListener("change", (e) => {
     handleInputChange(e);
   });
+  plans.forEach((plan) => {
+    plan.addEventListener("click", (e) => {
+      formValues.plan = { ...formValues.plan, type: e.target.value };
+    });
+  });
+  onlineCheck.addEventListener("click", (e) => {
+    if (onlineCheck.checked) {
+      formValues.addon.push(e.target.value);
+    } else {
+      formValues.addon.splice(formValues.addon.indexOf(e.target.value), 1);
+    }
+  });
+  storageCheck.addEventListener("click", (e) => {
+    if (storageCheck.checked) {
+      formValues.addon.push(e.target.value);
+    } else {
+      formValues.addon.splice(formValues.addon.indexOf(e.target.value), 1);
+    }
+  });
+  profileCheck.addEventListener("click", (e) => {
+    if (profileCheck.checked) {
+      formValues.addon.push(e.target.value);
+    } else {
+      formValues.addon.splice(formValues.addon.indexOf(e.target.value), 1);
+    }
+  });
+  checkbox.addEventListener("click", (e) => {
+    if (checkbox.checked) {
+      montlyPlan.classList.remove("active");
+      yearlyPlan.classList.add("active");
+      advancedPrice.textContent = "$120/yr";
+      arcadePrice.textContent = "$90/yr";
+      proPrice.textContent = "$150/yr";
+      onlineAddon.textContent = "$10/yr";
+      profileAddon.textContent = "$20/yr";
+      storageAddon.textContent = "$20/yr";
+      yearlyPromo.forEach((p) => (p.style.display = "inline"));
+      formValues.plan = { ...formValues.plan, sub: "yearly" };
+    } else {
+      montlyPlan.classList.add("active");
+      yearlyPlan.classList.remove("active");
+      advancedPrice.textContent = "$9/yr";
+      arcadePrice.textContent = "$12/yr";
+      proPrice.textContent = "$15/yr";
+      onlineAddon.textContent = "$1/yr";
+      profileAddon.textContent = "$2/yr";
+      storageAddon.textContent = "$2/yr";
+      yearlyPromo.forEach((p) => (p.style.display = "none"));
+      formValues.plan = { ...formValues.plan, sub: "monthly" };
+    }
+  });
+  const handleDisplayFinish = () => {
+    finishup.innerHTML = `<li>
+                    <p>
+                      <span id="selected-plan">${
+                        formValues.plan.type.split(" ")[0] +
+                        "(" +
+                        formValues.plan.sub +
+                        ")"
+                      }</span>
+                      <a href="/">Change</a>
+                    </p>
+                    <p id="selected-amount">${
+                      formValues.plan.sub === "monthly"
+                        ? "$" + formValues.plan.type.split(" ")[1]
+                        : ""
+                    }
+                    ${
+                      formValues.plan.sub === "yearly"
+                        ? "$" + formValues.plan.type.split(" ")[2]
+                        : ""
+                    }
+                    /mo</p>
+                  </li> <li>
+                      <p>
+                        <span id="selected-plan">${
+                          formValues.addon[0].split(" ")[0] +
+                          formValues.addon[1].split(" ")[1]
+                        }</span>
+                      </p>
+                      <p id="selected-amount">${
+                        "$" + formValues.addon[0].split(" ")[2]
+                      }/mo</p>
+                    </li> 
+                    <li>
+                      <p>
+                        <span id="selected-plan">${
+                          formValues.addon[1].split(" ")[0] +
+                          formValues.addon[1].split(" ")[1]
+                        }</span>
+                      </p>
+                      <p id="selected-amount">${
+                        "$" + formValues.addon[1].split(" ")[2]
+                      }/mo</p>
+                    </li>`;
+  };
+  let selectedPlan =
+    formValues.plan.sub === "monthly"
+      ? formValues.plan.type?.split(" ")[1]
+      : formValues.plan.type?.split(" ")[2];
   class FormHandler {
     constructor(pageOne, pageTwo, pageThree, pageFour) {
       this.allPages = [
@@ -47,24 +175,28 @@ const app = () => {
           id: 1,
           name: "form-page",
           element: pageOne,
+          pageNum: pagenumOne,
           validation: () => this.handleValidation("personalNfo"),
         },
         {
           id: 2,
           name: "plan-page",
           element: pageTwo,
-          validation: () => this.handleValidation("personalNfo"),
+          pageNum: pagenumTwo,
+          validation: () => this.handleValidation("plan"),
         },
         {
           id: 3,
           name: "addons-page",
           element: pageThree,
+          pageNum: pagenumThree,
           validation: () => this.handleValidation("personalNfo"),
         },
         {
           id: 4,
           name: "finish-page",
           element: pageFour,
+          pageNum: pagenumFour,
           validation: () => true,
         },
       ];
@@ -75,7 +207,8 @@ const app = () => {
       prevBtn.disabled = true;
     }
     handleSubmission() {
-      console.log("submit");
+      stepsWrapper.style.display = "none";
+      completionPage.style.display = "flex";
     }
     handleValidation(type) {
       let validRegex =
@@ -113,7 +246,11 @@ const app = () => {
             return;
           }
           break;
-
+        case "plan":
+          if (!formValues.plan.type) {
+            valid = false;
+            planErr.style.display = "inline";
+          }
         default:
           break;
       }
@@ -121,7 +258,6 @@ const app = () => {
     }
     gotoNext() {
       let validated = this.currentPage.validation();
-      console.log(validated)
       if (!validated) return;
       this.prevPage = this.currentPage;
       this.currentPage = this.allPages.filter(
@@ -130,9 +266,12 @@ const app = () => {
       prevBtn.style.opacity = 1;
       prevBtn.disabled = false;
       this.prevPage.element.classList.remove("activePage");
+      this.prevPage.pageNum.classList.remove("active");
       this.currentPage.element.classList.add("activePage");
+      this.currentPage.pageNum.classList.add("active");
 
       if (this.currentPage.id === 4) {
+        handleDisplayFinish();
         nextBtn.textContent = "Confirm";
         nextBtn.classList.add("confirm-btn");
       }
@@ -144,6 +283,8 @@ const app = () => {
       )[0];
       this.prevPage.element.classList.remove("activePage");
       this.currentPage.element.classList.add("activePage");
+      this.prevPage.pageNum.classList.remove("active");
+      this.currentPage.pageNum.classList.add("active");
       nextBtn.textContent = "Next step";
       nextBtn.classList.remove("confirm-btn");
       if (this.currentPage.id === 1) {
